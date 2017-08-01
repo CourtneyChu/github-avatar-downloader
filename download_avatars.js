@@ -10,17 +10,20 @@ var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com
 var t = {
   url: requestURL,
   headers: {
-    'User-Agent': 'Courtney'
+    'User-Agent': 'CourtneyChu'
   }
 };
 
 request(t, function(err, response, body) {
   if (err) throw err;
   console.log('Response Status Code:', response.statusCode)
-  console.log(body)
-});
+  var parsed = JSON.parse(body);
+  cb(err, parsed);
+  })
 
-}
+};
+
+
 
 
 
@@ -30,4 +33,9 @@ request(t, function(err, response, body) {
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
+  result.forEach(function(item) {
+    console.log(item.avatar_url);
+  });
+
+
 });
