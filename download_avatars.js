@@ -24,18 +24,24 @@ request(t, function(err, response, body) {
 };
 
 
-
-
-
-
-
-
 getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
+//  console.log("Errors:", err);
+//  console.log("Result:", result);
   result.forEach(function(item) {
     console.log(item.avatar_url);
+    downloadImageByURL(item.avatar_url, 'avatars/' + item.login);
   });
 
 
 });
+
+var fs = require('fs');
+
+function downloadImageByURL(url, filePath) {
+ request.get(url)
+  .on('error', function(err) {
+    console.log(err)
+    })
+    .pipe(fs.createWriteStream(filePath));
+  }
+
